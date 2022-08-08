@@ -3,7 +3,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Verifyemail = () => {
-  console.log(localStorage.getItem('token'))
 
   return (
     <div>

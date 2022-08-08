@@ -59,7 +59,6 @@ export default function Simple(props) {
     onView();
 
   }, []);
-  console.log(user.logo)
 
 
 
@@ -168,7 +167,8 @@ export default function Simple(props) {
                 </MenuItem>
                 <MenuItem ref={btnRef} onClick={onOpen} >
                   Change Avatar</MenuItem>
-                <MenuItem>View Profile</MenuItem>
+                <MenuItem>
+                <Link to='/view-profile'>View Profile</Link></MenuItem>
                 <MenuDivider />
                 <MenuItem
                   bgColor={"blue.500"}

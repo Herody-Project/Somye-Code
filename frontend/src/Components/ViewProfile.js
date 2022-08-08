@@ -21,7 +21,6 @@ import { useHistory } from "react-router-dom";
 
 import { InfoOutlineIcon, SmallCloseIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
-import VerifyOtp from './VerifyOtp';
 
 const ViewProfile = (props) => {
   const [user, setUser] = useState({
@@ -45,7 +44,6 @@ const ViewProfile = (props) => {
     pincode:"",
     about:"",
     logo:"",
-    state:""
 
 
   })
@@ -180,6 +178,7 @@ const ViewProfile = (props) => {
     }
 
   return (
+    <>
     <Flex
       minH={'100vh'}
       align={'center'}
@@ -264,6 +263,7 @@ const ViewProfile = (props) => {
                 value={user.email}
                 onChange={handleChange}
                 name="email"
+                disabled
                 
               />
             </FormControl>
@@ -414,9 +414,10 @@ const ViewProfile = (props) => {
                 placeholder=""
                 _placeholder={{ color: 'gray.500' }}
                 type="tel"
-                value={user.phoneNumber}
+                value= {'+' + user.phoneNumber}
                 onChange={handleChange}
                 name="phoneNumber"
+                disabled
               />
             </FormControl>
           </Box>
@@ -466,6 +467,29 @@ const ViewProfile = (props) => {
       </Stack>
 
     </Flex >
+    <Flex justify={'center'}>
+    
+    <HStack >
+      <Box>
+        <Link to='/update-mail'> 
+        <Button bgColor={'chocolate'} _hover={{bgColor:'red.200'}}>Change E-mail</Button>
+        </Link>
+        
+      </Box>
+      <Box>
+      <Link to='/update-number'>
+      <Button bgColor={'chocolate'} _hover={{bgColor:'red.200'}}>Change Phone Number</Button>
+      </Link>
+      </Box>
+      <Box>
+      <Link to='/update-password'>
+      <Button bgColor={'chocolate'} _hover={{bgColor:'red.200'}}>Change Password</Button>
+      </Link>
+      </Box>
+      
+    </HStack>
+    </Flex>
+    </>
 
 
   )

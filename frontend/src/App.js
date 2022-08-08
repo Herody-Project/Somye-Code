@@ -8,6 +8,9 @@ import { useState } from 'react';
 import Verifyemail from './Components/Verifyemail';
 import ViewProfile from './Components/ViewProfile';
 import VerifyOtp from './Components/VerifyOtp';
+import UpdateEmail from './Components/UpdateEmail';
+import UpdateNumber from './Components/UpdateNumber';
+import UpdatePass from './Components/UpdatePass';
 
 
 function App() {
@@ -51,6 +54,15 @@ function App() {
           </Route>
           <Route exact path="/view-profile" >
             <ViewProfile showAlert={showAlert}/>
+          </Route>
+          <Route exact path="/update-mail" >
+            <UpdateEmail showAlert={showAlert}/>
+          </Route>
+          <Route exact path="/update-number" >
+            <UpdateNumber showAlert={showAlert}/>
+          </Route>
+          <Route exact path="/update-password" >
+            <UpdatePass showAlert={showAlert}/>
           </Route>
           </>
           </Switch>
