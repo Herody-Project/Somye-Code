@@ -49,14 +49,13 @@ export default function SimpleCard(props) {
         }),
       });
       const json = await response.json();
-      console.log(json)
+      console.log(json.authtoken)
       if (json.success) {
         // redirect
-        console.log(console.log(localStorage.getItem('token')));
+        console.log(json.autht)
         localStorage.removeItem('token');
-        localStorage.setItem('token', json.authtoken);
+        localStorage.setItem('token', json.autht);
         console.log(json.authtoken)
-        console.log(console.log(localStorage.getItem('token')));
         props.showAlert('Logged in successfully!','success')
         history.push("/home");
       } 

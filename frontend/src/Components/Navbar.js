@@ -29,8 +29,10 @@ export default function Simple(props) {
   const location = useLocation();
   const btnRef = useRef();
   const { isOpen, onClose, onOpen } = useDisclosure();
+
   const logout = () => {
     localStorage.removeItem('token');
+    console.log(localStorage.getItem('token'))
     history.push('/login');
     props.showAlert('Logged out successfully!', 'success')
   }
@@ -50,6 +52,7 @@ export default function Simple(props) {
     }
     )
     const json = await response.json();
+    console.log(localStorage.getItem('token'))
     setUser({
       logo: json.logo
     })
@@ -168,7 +171,11 @@ export default function Simple(props) {
                 <MenuItem ref={btnRef} onClick={onOpen} >
                   Change Avatar</MenuItem>
                 <MenuItem>
-                <Link to='/view-profile'>View Profile</Link></MenuItem>
+                <Link to='/view-profile'>View Profile</Link>
+                </MenuItem>
+                <MenuItem>
+                <Link to='/create-gig'>Create Gig</Link>
+                </MenuItem>
                 <MenuDivider />
                 <MenuItem
                   bgColor={"blue.500"}

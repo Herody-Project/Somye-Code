@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../Schema/User");
+const Gig = require("../Schema/Gig");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
@@ -143,15 +144,10 @@ router.post(
           res.json("wrong password")
         }
         else {
-          const data = {
-            user: {
-              id: vuser.id
-            }
-          }
-          const authtoken = jwt.sign(data, JWT_SECRET);
-          const uuser = await User.findOneAndUpdate({ email: email }, { authtoken: authtoken })
+          const autht = vuser.authtoken
+          console.log(vuser.authtoken)
 
-          res.json({ success: true, authtoken });
+          res.json({ success: true, autht });
 
         }
       }
@@ -304,6 +300,71 @@ router.get('/fetch-user', async (req, res) => {
   }
 
 })
+
+router.post('/create-gig',async (req,res)=>{
+  const {title,description,ttitle,tdescription,tlink,amount} = req.body;
+  const task = {ttitle,tdescription,tlink}
+  const {authtoken} = req.headers;
+  const vgig = await Gig.findOne({title:title,authtoken:authtoken});
+  try{
+  if(!vgig){
+    const cgig = await Gig.create({
+      title:title,
+      task:task,
+      description:description,
+      amount:amount,
+      authtoken:authtoken
+    })
+    .then(
+      res.json({success:true})
+    ).catch((error)=>
+    res.json({success:false})
+
+    )
+
+  }
+  else{
+     const egig = await Gig.findOneAndUpdate({title:title,authtoken:authtoken},{$push:{
+      task:task
+     }})
+     .then(
+      res.json({success:true})
+    ).catch((error)=>
+    res.json({success:false})
+    )
+    console.log(egig)
+
+  }
+ 
+}
+catch(error){
+  console.log(error)
+}
+})
+router.post('/fetch-gigs',async (req,res)=>{
+  try{
+  const {authtoken} = req.body;
+  const ggigs = await Gig.find({authtoken:authtoken});
+  res.json(ggigs)
+  }
+  catch(error){
+    console.log(error)
+  }
+  
+})
+router.post('/del-gig',async (req,res)=>{
+  try{
+  const {authtoken,gig} = req.body;
+  const ggigs = await Gig.findOneAndDelete({title:gig,authtoken:authtoken});
+  res.json({success:true})
+  }
+  catch(error){
+    console.log(error)
+    res.json({success:false})
+  }
+  
+})
+
 
 
 module.exports = router;

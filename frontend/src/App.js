@@ -11,6 +11,7 @@ import VerifyOtp from './Components/VerifyOtp';
 import UpdateEmail from './Components/UpdateEmail';
 import UpdateNumber from './Components/UpdateNumber';
 import UpdatePass from './Components/UpdatePass';
+import Gig from './Components/Gig';
 
 
 function App() {
@@ -63,6 +64,9 @@ function App() {
           </Route>
           <Route exact path="/update-password" >
             <UpdatePass showAlert={showAlert}/>
+          </Route>
+          <Route exact path="/create-gig" >
+            <Gig showAlert={showAlert}/>
           </Route>
           </>
           </Switch>
