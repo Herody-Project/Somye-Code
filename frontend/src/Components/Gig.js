@@ -231,7 +231,7 @@ const Gig = (props) => {
                 justify={'center'}>
                     <HStack spacing={5}>
                 
-                {gigz.length===0
+                {gigz && gigz.length===0
                 ?
                 <>
                 <Text align='center'>

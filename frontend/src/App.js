@@ -12,6 +12,8 @@ import UpdateEmail from './Components/UpdateEmail';
 import UpdateNumber from './Components/UpdateNumber';
 import UpdatePass from './Components/UpdatePass';
 import Gig from './Components/Gig';
+import Internship from './Components/Internship';
+
 
 
 function App() {
@@ -67,6 +69,9 @@ function App() {
           </Route>
           <Route exact path="/create-gig" >
             <Gig showAlert={showAlert}/>
+          </Route>
+          <Route exact path="/create-internship" >
+            <Internship showAlert={showAlert}/>
           </Route>
           </>
           </Switch>

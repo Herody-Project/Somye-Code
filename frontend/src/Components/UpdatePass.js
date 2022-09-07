@@ -49,7 +49,7 @@ const UpdatePass = (props) => {
                 "authtoken": localStorage.getItem('token')
             },
             body: JSON.stringify({
-                phoneNumber: '91' + number
+                phoneNumber:number
             })
         }
         )
@@ -69,7 +69,7 @@ const UpdatePass = (props) => {
                 "Content-Type": "application/json",
                 "authtoken": localStorage.getItem('token')
             },
-            body: JSON.stringify({ phoneNumber: '91' + number, otp: pass })
+            body: JSON.stringify({ phoneNumber:  number, otp: pass })
 
         })
         const json = await response.json();

@@ -45,7 +45,7 @@ const UpdateNumber = (props) => {
                     "Content-Type": "application/json",
                     "authtoken": localStorage.getItem('token')
                 },
-                body: JSON.stringify({ phoneNumber:'91'+  user.number, otp: pass })
+                body: JSON.stringify({ phoneNumber: user.number, otp: pass })
     
             })
             const json = await response.json();

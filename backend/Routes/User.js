@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../Schema/User");
 const Gig = require("../Schema/Gig");
+const Internship = require("../Schema/Internship");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
@@ -43,7 +44,8 @@ router.post(
           email: email,
           phoneNumber: phoneNumber,
           emailToken: crypto.randomBytes(64).toString('hex'),
-          isVerified: false
+          isVerified: false,
+          authtoken: jwt.sign(password,JWT_SECRET)
         });
         try {
           const transporter = nodemailer.createTransport({
@@ -60,7 +62,7 @@ router.post(
             from: process.env.USER,
             to: nuser.email,
             subject: 'Xyz- Please verify your email',
-            html: `<p > Hello <b> ${manager.charAt(0).toUpperCase() + manager.slice(1,)} </b>, welcome to Origin Cloud Technologies! <p> </br> <h3>Please verify your email here:<a href='http://${req.headers.host}/user/verify-email?token=${nuser.emailToken}'> Verify your email </a> </h3>`,
+            html: `<p > Hello <b> ${manager.charAt(0).toUpperCase() + manager.slice(1,)} </b>, welcome to Origin Cloud Technologies! <p> </br> <h3>Please verify your email here:<a href='http://${req.headers.host}/user/verify-email?token=${nuser.emailToken}&email=${email}'> Verify your email </a> </h3>`,
           });
           console.log("email sent sucessfully");
           res.json({ email: true })
@@ -263,6 +265,7 @@ router.patch('/update-pass', async (req, res) => {
   try{
   const {  npass } = req.body;
   const token = req.headers.authtoken;
+  console.log(token)
   const user = await User.findOne({ authtoken: token });
   const salt = await bcrypt.genSalt(10);
   const pass = await bcrypt.hash(npass, salt);
@@ -284,6 +287,7 @@ router.post('/verify-otp', async (req, res) => {
       res.status(500).send(e);
     });
   const token = req.headers.authtoken;
+  console.log(token)
   const vuser = await User.findOneAndUpdate({ authtoken: token }, { isChecked: true, phoneNumber: req.body.phoneNumber });
 
   res.status(200).send(check);
@@ -363,6 +367,47 @@ router.post('/del-gig',async (req,res)=>{
     res.json({success:false})
   }
   
+})
+
+router.post('/create-internship',async (req,res)=>{
+  const {title,description,skills,stipend,adate,sdate,workplace,category,positions,duration,abenefits} = req.body
+  const authtoken = req.headers.authtoken
+  // console.log(title,description,skills,stipend,adate,sdate,workplace,category,positions,duration,abenefits)
+  const fuser = await User.findOne({authtoken:authtoken})
+  if(fuser){
+    const ship = await Internship.create({
+      title:title,
+      description:description,
+      category:category,
+      workplace:workplace,
+      positions:positions,
+      skills:skills,
+      stipend:stipend,
+      duration:duration,
+      adate:adate,
+      sdate:sdate,
+      abenefits:abenefits,
+      authtoken:authtoken
+
+    })
+    .then(
+      res.json({success:true})
+    )
+    .catch(error=>(
+      res.json({success:false})
+    ))
+
+  }
+  else{
+
+  }
+
+})
+router.post('/fetch-ships',async(req,res)=>{
+  const authtoken = req.body.authtoken;
+  const fuser = await Internship.find({authtoken:authtoken});
+  res.json(fuser)
+
 })
 
 

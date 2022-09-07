@@ -176,6 +176,9 @@ export default function Simple(props) {
                 <MenuItem>
                 <Link to='/create-gig'>Create Gig</Link>
                 </MenuItem>
+                <MenuItem>
+                <Link to='/create-internship'>Post a Internship</Link>
+                </MenuItem>
                 <MenuDivider />
                 <MenuItem
                   bgColor={"blue.500"}

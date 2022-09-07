@@ -423,7 +423,7 @@ const ViewProfile = (props) => {
           </Box>
           <Box pt={7}>
             <Link to='/verify-otp' >
-              <Button bg={'green.400'} display={user.phoneVerified ? 'none' : ''} >Verify Number</Button>
+              <Button bg={'green.400'} display={user.isChecked ? 'none' : ''} >Verify Number</Button>
             </Link>
           </Box>
 
